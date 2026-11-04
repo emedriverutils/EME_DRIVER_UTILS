@@ -7,15 +7,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GamepadManager {
-    public static String[] actions = {"drive", "strafe", "turn"};
-    public static Map<String, Field> gameActions;
-    public static Map<String, Gamepad> gamepads;
+    public static class GameAction{
+        private Gamepad gamepad;
+        private Field field;
+        public GameAction(Gamepad gamepad, Field field){
+            this.gamepad = gamepad;
+            this.field = field;
+        }
+        public GameAction(Field field, Gamepad gamepad){
+            this.gamepad = gamepad;
+            this.field = field;
+        }
+        public Gamepad getGamepad(){
+            return gamepad;
+        }
+        public Field getField(){
+            return field;
+        }
+    }
+    public static String[] doubleActions = {"drive", "strafe", "turn"};
+    public static String[] booleanActions = {};
+    private static String[] actions;
+    public static Map<String, GameAction> gameActions;
 
     public static void startGamepadManager/*set keybinds*/(Gamepad gamepad1, Gamepad gamepad2) throws Exception{
-        gameActions = new HashMap<String, Field>((int) Math.ceil(actions.length/0.75));
+        actions = new String[doubleActions.length + booleanActions.length];
+        if(doubleActions.length != 0) {
+            for (int i = 0; i < doubleActions.length; i++) {
+                actions[i] = doubleActions[i];
+            }
+        }
+        if(booleanActions.length != 0){
+            for(int i = 0; i < booleanActions.length; i++){
+                actions[i + doubleActions.length] = booleanActions[i];
+            }
+        }
+        gameActions = new HashMap<String, GameAction>((int) Math.ceil(actions.length/0.75));
         for(String name:actions){
             Gamepad gamepad;
-            String[] strings = ConfigManager.config.get(name).split(".");
+            String[] strings = ConfigManager.config.get(name).split("\\.");
             if (strings.length != 2){
                 throw new Exception("Please put a single dot in your button configurations. You currently have " + strings.length + "dots in your config.");
             }
@@ -27,17 +57,18 @@ public class GamepadManager {
                 throw new Exception("Please put a valid gamepad in your button configuration files.");
             }
             try {
-                gameActions.put(name, gamepad.getClass().getDeclaredField(strings[1]));
+                gameActions.put(name, new GameAction(gamepad, gamepad.getClass().getDeclaredField(strings[1])));
             }catch(NoSuchFieldException e){
                 throw new Exception("Please put a valid button in your button configuration files.");
             }
-            gamepads.put(name, gamepad);
         }
     }
     public static double getOutDouble(String name) throws IllegalArgumentException, IllegalAccessException{
-        return gameActions.get(name).getDouble(gamepads.get(name));
+        GameAction action = gameActions.get(name);
+        return action.getField().getDouble(action.getGamepad());
     }
     public static boolean getOutBool(String name) throws IllegalArgumentException, IllegalAccessException{
-        return gameActions.get(name).getBoolean(gamepads.get(name));
+        GameAction action = gameActions.get(name);
+        return action.getField().getBoolean(action.getGamepad());
     }
 }

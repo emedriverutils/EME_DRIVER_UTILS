@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HardwareManager {
-    public static String[] motorNames = {"leftBackDrive", "rightBackDrive", "leftFrontDrive", "rightFrontDrive"};
+    public static String[] motorNames = {"FrontLeft", "BackLeft", "FrontRight", "BackRight"};
     private static Map<String, DcMotor> motors;
     public static String[] servoNames = {};
     private static Map<String, Servo> servos;
@@ -18,7 +19,13 @@ public class HardwareManager {
     public static void startHardwareManager(HardwareMap hardwareMap, boolean hasLimelight){
         motors = new HashMap<String, DcMotor>((int) Math.ceil(motorNames.length/0.75));
         for(String name:motorNames) {
-            motors.put(name, hardwareMap.get(DcMotor.class, ConfigManager.config.get(name)));
+            DcMotor motor = hardwareMap.get(DcMotor.class, ConfigManager.config.get(name));
+            motors.put(name, motor);
+            if(ConfigManager.config.get(name + "Reversed").equals("T")){
+                motor.setDirection(DcMotorSimple.Direction.REVERSE);
+            }else{
+                motor.setDirection(DcMotorSimple.Direction.FORWARD);
+            }
         }
         servos = new HashMap<String, Servo>((int) Math.ceil(servoNames.length/0.75));
         for(String name:servoNames){

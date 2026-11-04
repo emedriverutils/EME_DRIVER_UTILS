@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,9 +13,10 @@ import java.util.Map;
 
 public class ConfigManager{
     public static Map<String, String> config;
-    public static void startConfigManager(String file) throws IOException {
+    public static void startConfigManager(String file, HardwareMap hardwareMap) throws IOException {
         Yaml yaml = new Yaml();
-        try(InputStream stream = ConfigManager.class.getClassLoader().getResourceAsStream(file)) {
+        try(InputStream stream = hardwareMap.appContext.getAssets().open(file) /*InputStream stream = new FileInputStream(file)*/) {
+            //you can make a file directly in the robot without uploading using device manager -> open in device explorer
             config = yaml.load(stream);
         }
     }
@@ -27,10 +32,13 @@ public class ConfigManager{
     public static void startConfigManager(Map<String, String> configuration){
         config = configuration;
     }
-    public static double[] convertToDouble(String[] keys){
+    public static double getDouble(String key) throws NullPointerException, NumberFormatException{
+        return Double.parseDouble(config.get(key));
+    }
+    public static double[] getDoubles(String[] keys){
         double[] doubles = new double[keys.length];
         for(int i = 0; i < keys.length; i++){
-            doubles[i] = Double.parseDouble(config.get(keys[i]));
+            doubles[i] = getDouble(keys[i]);
         }
         return doubles;
     }

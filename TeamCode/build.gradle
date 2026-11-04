@@ -22,8 +22,16 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
+
+    //Panels stuff
+    compileSdkVersion(36)
+    defaultConfig{
+        minSdk 24
+    }
 }
 
 dependencies {
     implementation project(':FtcRobotController')
+    implementation "com.bylazar:docs:1.0.9"
+    implementation "com.bylazar:fullpanels:1.0.9"
 }
