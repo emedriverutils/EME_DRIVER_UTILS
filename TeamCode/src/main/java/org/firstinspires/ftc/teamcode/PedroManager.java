@@ -20,6 +20,7 @@ public class PedroManager {
     public Follower robot;
     public static final PoseFactory poseMaker = PoseFactory.degrees();
 
+    //constructors
     public PedroManager(Pose2D startPose, HardwareMap hardwareMap) {
         Scheduler.reset();
         robot = Constants.create(hardwareMap);
@@ -33,6 +34,7 @@ public class PedroManager {
         robot.update();
     }
 
+    //converts different things to Poses
     public static Pose convertToPose(Pose2D toBeConverted) {
         return poseMaker.of(toBeConverted.getX(DistanceUnit.INCH), toBeConverted.getY(DistanceUnit.INCH), toBeConverted.getHeading(AngleUnit.DEGREES));
     }
@@ -43,6 +45,7 @@ public class PedroManager {
         return poseMaker.of(x, y, heading);
     }
 
+    //makes the robot go to places
     public void goToPose(Pose startPose, Pose endPose) {
         Scheduler.schedule(follow(robot, line(startPose, endPose).linear(startPose, endPose)));
         robot.update();
@@ -56,11 +59,13 @@ public class PedroManager {
         robot.idle();
         while (robot.isBusy() && opMode.opModeIsActive()) {robot.update();}
     }
-    public void goToPoses(Pose[] poses){
+    public void goToPoses(Pose[] poses) {
         for(int i = 0; i < poses.length-1; i++){
             goToPose(poses[i], poses[i+1]);
         }
     }
+
+    //takes an array of runnables and runs them all
     public void doAuto(Runnable[] thingsToDo) {
         for (int i = 0; i < thingsToDo.length -1; i++) {
             //all while loops in your runnables must have nameOfYourPedroManager.robot.update() in them.
