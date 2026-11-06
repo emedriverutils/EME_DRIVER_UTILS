@@ -1,0 +1,23 @@
+#Please replace each of the null values with your actual configuration values
+#
+#Motors
+FrontLeft: frontLeft
+FrontRight: frontRight
+BackLeft: backLeft
+BackRight: backRight
+#
+#Motor reversals
+FrontRightReversed: T
+BackRightReversed: T
+FrontLeftReversed: F
+BackLeftReversed: T
+#
+#Servos
+#
+#Gamepad commands
+#Put the name of the gamepad (e.g. gamepad1 or gamepad2) followed by a . and then the field in that
+#gamepad you want the name to map to (e.g. a, left_trigger, or left_stick_x).
+#An example of what you might put is gamepad2.left_stick_x
+drive: gamepad1.left_stick_y
+strafe: gamepad1.left_stick_x
+turn: gamepad1.right_stick_x

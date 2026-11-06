@@ -1,0 +1,15 @@
+#Wrtie the name that appears in your config in your driver hub for the motor or servo that you want these names to represent
+#Make sure to write the name after the colon
+#
+#Motors
+FrontRight: frontRight
+BackRight: backRight
+FrontLeft: frontLeft
+BackLeft: backLeft
+
+FrontRightReversed: T
+BackRightReversed: T
+FrontLeftReversed: F
+BackLeftReversed: T
+#
+#Servos
