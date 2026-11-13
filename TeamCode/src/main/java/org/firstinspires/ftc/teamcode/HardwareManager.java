@@ -15,8 +15,10 @@ public class HardwareManager {
     public static String[] servoNames = {};
     private static Map<String, Servo> servos;
     private static Limelight3A limelight;
+    public static HardwareMap hardwareMap;
 
     public static void startHardwareManager(HardwareMap hardwareMap, boolean hasLimelight){
+        HardwareManager.hardwareMap = hardwareMap;
         motors = new HashMap<String, DcMotor>((int) Math.ceil(motorNames.length/0.75));
         for(String name:motorNames) {
             DcMotor motor = hardwareMap.get(DcMotor.class, ConfigManager.config.get(name));

@@ -29,8 +29,12 @@ public class GamepadManager {
     public static String[] booleanActions = {};
     private static String[] actions;
     public static Map<String, GameAction> gameActions;
+    public static Gamepad gamepad1;
+    public static Gamepad gamepad2;
 
     public static void startGamepadManager/*set keybinds*/(Gamepad gamepad1, Gamepad gamepad2) throws Exception{
+        GamepadManager.gamepad1 = gamepad1;
+        GamepadManager.gamepad2 = gamepad2;
         actions = new String[doubleActions.length + booleanActions.length];
         if(doubleActions.length != 0) {
             for (int i = 0; i < doubleActions.length; i++) {

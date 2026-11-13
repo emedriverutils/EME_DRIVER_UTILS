@@ -22,15 +22,17 @@ public class PedroManager {
 
     //constructors
     public PedroManager(Pose2D startPose, HardwareMap hardwareMap) {
-        Scheduler.reset();
-        robot = Constants.create(hardwareMap);
-        robot.setPose(convertToPose(startPose));
-        robot.update();
+        new PedroManager(convertToPose(startPose), hardwareMap);
     }
+
+    public PedroManager(double x, double y, double heading, HardwareMap hardwareMap) {
+        new PedroManager(convertToPose(x, y, heading), hardwareMap);
+    }
+
     public PedroManager(Pose startPose, HardwareMap hardwareMap) {
         Scheduler.reset();
         robot = Constants.create(hardwareMap);
-        robot.setPose(startPose);
+        robot.setPose(convertToPose(startPose.x() + ConfigManager.getDouble("RobotWidth"), startPose.y() + ConfigManager.getDouble("RobotHeight"), startPose.heading()));
         robot.update();
     }
 
@@ -63,6 +65,10 @@ public class PedroManager {
         for(int i = 0; i < poses.length-1; i++){
             goToPose(poses[i], poses[i+1]);
         }
+    }
+
+    public Pose getRobotPose() {
+        return robot.pose();
     }
 
     //takes an array of runnables and runs them all
