@@ -41,19 +41,21 @@ public class AutoCommands {
                     }
                     ManualDrive driver = new ManualDrive();
                     telemetry.addLine("move menu");
+                    telemetry.update();
                     driver.runWheels();
                     if (GamepadManager.gamepad1.start) {
                         robot.robot.setPose(PedroManager.convertToPose(0, 0, 0));
                     }
                     robot.robot.update();
                     telemetry.addLine(robot.getRobotPose().toString());
-                    if (GamepadManager.getOutBool("")) {
+                    if (GamepadManager.gamepad1.right_trigger > 0.25 || GamepadManager.gamepad1.left_trigger > 0.25) {
                         try (FileWriter fileWriter = new FileWriter(autoFile, true)) {
                             fileWriter.write("move" + robot.getRobotPose().toString());
                         }
                     }
                 } catch (Exception e) {
                     //telemetry.addline(TelemetryManager.exeptionPrintout(e));
+                    throw new RuntimeException(e);
                 }
                 return false;
             };

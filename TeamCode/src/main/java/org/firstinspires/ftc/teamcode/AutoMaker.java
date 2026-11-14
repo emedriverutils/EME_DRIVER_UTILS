@@ -81,7 +81,7 @@ public class AutoMaker extends LinearOpMode {
     //runOpMode
     public void runOpMode() {
         try {
-            ConfigManager.startConfigManager("Config", hardwareMap);
+            ConfigManager.startConfigManager("Config.yml", hardwareMap);
             GamepadManager.startGamepadManager(gamepad1, gamepad2);
             HardwareManager.startHardwareManager(hardwareMap, ConfigManager.config.get("limelight") != null);
         } catch (Exception e) {
@@ -123,12 +123,12 @@ public class AutoMaker extends LinearOpMode {
                 }
             }
         }
+        waitForStart();
         while (opModeIsActive()) {
             buttons();
             runCommandUIs();
 
             telemetry.update();
         }
-        waitForStart();
     }
 }
