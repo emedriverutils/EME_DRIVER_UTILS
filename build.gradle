@@ -13,7 +13,8 @@ buildscript {
 
 plugins {
     // Note for FTC Teams: Do not modify this yourself.
-    id 'com.android.application' version '8.13.2' apply false
+    //id 'com.android.application' version '8.13.2' apply false
+    id 'maven-publish'
     id 'com.android.library' version '8.13.2' apply false
 }
 
@@ -34,4 +35,16 @@ allprojects {
 
 repositories {
     mavenCentral()
+}
+afterEvaluate{
+    publishing{
+        publications{
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.emedriverutils'
+                artifactId = 'EME_DRIVER_UTILS'
+                version = '1.0.0'
+            }
+        }
+    }
 }
