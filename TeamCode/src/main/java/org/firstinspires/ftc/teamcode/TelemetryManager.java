@@ -49,14 +49,14 @@ public class TelemetryManager {
     public static Map<Object, ArrayList<Data>> panelsObjectDatas;
     public static void startTelemetryManager(Telemetry telemetry){
         startTelemetryManager(telemetry, PanelsTelemetry.INSTANCE.getTelemetry());
-        telemetryDatas = new ArrayList<>();
-        panelsDatas = new ArrayList<>();
-        telemetryObjectDatas = new HashMap<>();
-        panelsObjectDatas = new HashMap<>();
     }
     public static void startTelemetryManager(Telemetry telemetry, com.bylazar.telemetry.TelemetryManager panels){
         TelemetryManager.telemetry = telemetry;
         TelemetryManager.panels = panels;
+        telemetryDatas = new ArrayList<>();
+        panelsDatas = new ArrayList<>();
+        telemetryObjectDatas = new HashMap<>();
+        panelsObjectDatas = new HashMap<>();
     }
 
     public static void addTelemetryOneTime(String caption, Object data){telemetry.addData(caption, data);}
@@ -210,5 +210,18 @@ public class TelemetryManager {
     public static void updateWithKey(Object key){
         updateTelemetryWithKey(key);
         updatePanelsWithKey(key);
+    }
+
+    public static String exceptionPrintout(Throwable e){
+        StringBuilder info = new StringBuilder();
+        info.append(e.getMessage());
+        StackTraceElement[] stack = e.getStackTrace();
+        for(StackTraceElement element : stack){
+            if(info.length() != 0){
+                info = info.append("\n");
+            }
+            info.append(element.toString());
+        }
+        return info.toString();
     }
 }
