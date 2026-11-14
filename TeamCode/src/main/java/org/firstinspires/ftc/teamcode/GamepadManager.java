@@ -30,7 +30,19 @@ public class GamepadManager {
     private static String[] actions;
     public static Map<String, GameAction> gameActions;
 
-    public static void startGamepadManager/*set keybinds*/(Gamepad gamepad1, Gamepad gamepad2) throws Exception{
+    public static void startGamepadManager/*set keybinds*/(Gamepad gamepad1, Gamepad gamepad2, String[] newDoubleActions, String[] newBooleanActions) throws Exception{
+        if(newDoubleActions != null && newDoubleActions.length != 0){
+            String[] doublActions = doubleActions;
+            doubleActions = new String[doublActions.length + newDoubleActions.length];
+            System.arraycopy(doublActions, 0, doubleActions, 0, doublActions.length);
+            System.arraycopy(newDoubleActions, 0, doubleActions, doublActions.length, newDoubleActions.length);
+        }
+        if(newBooleanActions != null && newBooleanActions.length != 0){
+            String[] boolActions = booleanActions;
+            booleanActions = new String[boolActions.length + newBooleanActions.length];
+            System.arraycopy(boolActions, 0, booleanActions, 0, boolActions.length);
+            System.arraycopy(newBooleanActions, 0, booleanActions, boolActions.length, newBooleanActions.length);
+        }
         actions = new String[doubleActions.length + booleanActions.length];
         if(doubleActions.length != 0) {
             for (int i = 0; i < doubleActions.length; i++) {
@@ -63,6 +75,10 @@ public class GamepadManager {
             }
         }
     }
+    public static void startGamepadManager(Gamepad gamepad1, Gamepad gamepad2) throws Exception{
+        startGamepadManager(gamepad1, gamepad2, null, null);
+    }
+
     public static double getOutDouble(String name) throws IllegalArgumentException, IllegalAccessException{
         GameAction action = gameActions.get(name);
         return action.getField().getDouble(action.getGamepad());
