@@ -43,8 +43,13 @@ public class TelemetryManagerTest extends LinearOpMode {
         }
         TelemetryManager.updateWithKey(this);
         TelemetryManager.update();
+        while(opModeIsActive() && !gamepad1.aWasPressed()){
+            telemetry.addLine("Test 6: Exception printout");
+            telemetry.addLine(TelemetryManager.exceptionPrintout(new Exception("This is working as intended. There should be a stack trace beneath this. If there is, press gamepad1.a")));
+            telemetry.update();
+        }
         while(opModeIsActive()){
-            TelemetryManager.addOneTime("done with all 5 tests");
+            TelemetryManager.addOneTime("done with all 6 tests");
             TelemetryManager.update();
         }
     }
