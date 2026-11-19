@@ -1,4 +1,4 @@
-package org.EME.driverUtils;
+package org.firstinspires.ftc.eme_aar;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
