@@ -37,7 +37,7 @@ dependencies {
     compileOnly "com.bylazar:fullpanels:1.0.9"
 }
 apply from: '../build.dependencies.gradle'
-afterEvaluate {
+/*afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
@@ -48,4 +48,4 @@ afterEvaluate {
             }
         }
     }
-}
+}*/
