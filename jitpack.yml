@@ -1,0 +1,4 @@
+jdk:
+  - openjdk17
+install:
+  - cd TeamCode && bash ./gradelew :EME_DRIVER_UTILS:assembleRelease :EME_DRIVER_UTILS:publishToMavenLocal
