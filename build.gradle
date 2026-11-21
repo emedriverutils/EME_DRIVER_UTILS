@@ -18,6 +18,10 @@ plugins {
     id 'com.android.library' version '8.13.2' apply false
 }
 
+apply plugin: 'maven-publish'
+group = 'com.github.emedriverutils'
+version = 'test0.0.3'
+
 // This is now required because aapt2 has to be downloaded from the
 // google() repository beginning with version 3.2 of the Android Gradle Plugin
 allprojects {

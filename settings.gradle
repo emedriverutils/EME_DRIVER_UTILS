@@ -1,8 +1,3 @@
-apply plugin: 'maven-publish'
-
-group = 'com.github.emedriverutils'
-version = 'test0.0.3'
-
 pluginManagement {
     repositories {
         google()
@@ -10,6 +5,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 
 include ':FtcRobotController'
 include ':TeamCode'
