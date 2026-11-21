@@ -15,6 +15,7 @@ public class AutoMaker extends LinearOpMode {
     private ArrayList<String> autoCommands;
     private boolean commandIsSelected = false;
     private File autoFile;
+    private boolean wasWritten = false;
 
     //Main menu function
     private void mainMenu() {
@@ -38,7 +39,7 @@ public class AutoMaker extends LinearOpMode {
 
     public void buttons() {
         //Home buttons
-        if (gamepad1.right_stick_button || gamepad1.left_stick_button) {
+        if (gamepad1.back) {
             //go out of the command UI
             commandIsSelected = false;
         }
@@ -60,6 +61,7 @@ public class AutoMaker extends LinearOpMode {
                     //if the commands UI is done exit its UI
                     if (selectedCommand.UI(telemetry, hardwareMap, autoFile)) {
                         commandIsSelected = false;
+                        wasWritten = true;
                     }
 
                     //exeption catch/print thing
@@ -129,6 +131,9 @@ public class AutoMaker extends LinearOpMode {
             runCommandUIs();
 
             telemetry.update();
+        }
+        if (!wasWritten) {
+            autoFile.delete();
         }
     }
 }

@@ -22,11 +22,11 @@ public class PedroManager {
 
     //constructors
     public PedroManager(Pose2D startPose, HardwareMap hardwareMap) {
-        new PedroManager(convertToPose(startPose), hardwareMap);
+        this(convertToPose(startPose), hardwareMap);
     }
 
     public PedroManager(double x, double y, double heading, HardwareMap hardwareMap) {
-        new PedroManager(convertToPose(x, y, heading), hardwareMap);
+        this(convertToPose(x, y, heading), hardwareMap);
     }
 
     public PedroManager(Pose startPose, HardwareMap hardwareMap) {
@@ -45,6 +45,17 @@ public class PedroManager {
     }
     public static Pose convertToPose(double x, double y, double heading) {
         return poseMaker.of(x, y, heading);
+    }
+    public static Pose convertToPose(long x, long y, long heading) {
+        return poseMaker.of(x, y, heading);
+    }
+
+    public static Pose roundPose(Pose poseToRound, int decimalToRoundTo) {
+        return convertToPose(
+            Math.round(poseToRound.x() * Math.pow(10, decimalToRoundTo))/Math.pow(10, decimalToRoundTo),
+            Math.round(poseToRound.y() * Math.pow(10, decimalToRoundTo))/Math.pow(10, decimalToRoundTo),
+            Math.round(poseToRound.heading() * Math.pow(10, decimalToRoundTo))/Math.pow(10, decimalToRoundTo)
+        );
     }
 
     //makes the robot go to places
