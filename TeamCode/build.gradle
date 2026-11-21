@@ -26,5 +26,4 @@ android {
 
 dependencies {
     implementation project(':FtcRobotController')
-    implmentation 'com.github.emedriverutils:EME_DRIVER_UTILS:test0.0.1'
 }
